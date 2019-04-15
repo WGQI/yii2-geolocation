@@ -83,7 +83,7 @@ class Geolocation extends Component{
         
         if(isset(self::$api_key))
             $urlTmp = preg_replace('!\{\{(api_key)\}\}!', self::$api_key, $urlTmp);
-        $urlTmp .= "&lang="$lang;
+        $urlTmp .= "&lang=".self::$lang;
         return $urlTmp;
     }
     
