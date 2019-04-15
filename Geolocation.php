@@ -37,7 +37,7 @@ class Geolocation extends Component{
         
         if (isset($config['config']['provider'])) {
             if(isset($config['config']['lang'])){
-             $lang = $config['config']['lang'];
+             self::$lang = $config['config']['lang'];
             }
             $provider = $config['config']['provider'];
 
