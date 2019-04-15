@@ -93,20 +93,28 @@ class Geolocation extends Component{
      * @param string $ip You can supply an IP address or none to use the current client IP address
      * @return mixed
      */
-    public static function getInfo($ip=NULL){
-        
-        if(!isset($ip))
-            $ip = self::getIP ();
-        
+    public static function getInfo($ip = NULL)
+    {
+
+        if (!isset($ip))
+            $ip = self::getIP();
+
         $url = self::createUrl($ip);
-        
+
         //print_r($url); exit;
-        
-        if(self::$return_formats == 'php')
-            return unserialize(file_get_contents($url));
-        else
+        if ($city = Yii::$app->request->cookies->getValue('city')) {
+            return $city;
+        }
+        if (self::$return_formats == 'php') {
+            $arr = unserialize(file_get_contents($url));
+            Yii::$app->getResponse()->getCookies()->add(new yii\web\Cookie([
+                'name' => 'city',
+                'value' => $arr['geoplugin_city'],
+            ]));
+            return $arr;
+        } else
             return file_get_contents($url);
-    }    
+    }  
     
     
     /**
