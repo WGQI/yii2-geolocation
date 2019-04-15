@@ -22,12 +22,13 @@ class Geolocation extends Component{
      * @package rodzadra\yii2-geolocation
      */
     
-    public $config = ['provider'=>NULL,'return_formats'=>NULL, 'api_key'=>NULL];
+    public $config = ['provider'=>NULL,'return_formats'=>NULL, 'api_key'=>NULL, 'lang'=>'en'];
         
     private static $plugins         = array();      
     private static $provider        = NULL;       
     private static $return_formats   = NULL;
     private static $api_key         = NULL;
+    private static $lang = 'en';
 
 
     public function __construct($config = array()) {
@@ -35,7 +36,9 @@ class Geolocation extends Component{
         self::$plugins = array_diff(scandir((__DIR__).'/plugins/'), array('..', '.'));
         
         if (isset($config['config']['provider'])) {
-
+            if(isset($config['config']['lang'])){
+             $lang = $config['config']['lang'];
+            }
             $provider = $config['config']['provider'];
 
             if (in_array($provider . ".php", self::$plugins)) {
@@ -80,7 +83,7 @@ class Geolocation extends Component{
         
         if(isset(self::$api_key))
             $urlTmp = preg_replace('!\{\{(api_key)\}\}!', self::$api_key, $urlTmp);
-        
+        $urlTmp .= "&lang="$lang;
         return $urlTmp;
     }
     
