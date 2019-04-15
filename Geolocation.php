@@ -111,7 +111,7 @@ class Geolocation extends Component{
                 'name' => 'city',
                 'value' => $arr['geoplugin_city'],
             ]));
-            return $arr;
+            return $arr['geoplugin_city'];
         } else
             return file_get_contents($url);
     }  
