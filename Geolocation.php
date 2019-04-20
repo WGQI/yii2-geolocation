@@ -102,15 +102,8 @@ class Geolocation extends Component{
         $url = self::createUrl($ip);
 
         //print_r($url); exit;
-        if ($city = Yii::$app->request->cookies->getValue('city')) {
-            return $city;
-        }
         if (self::$return_formats == 'php') {
             $arr = unserialize(file_get_contents($url));
-            Yii::$app->getResponse()->getCookies()->add(new yii\web\Cookie([
-                'name' => 'city',
-                'value' => $arr['geoplugin_city'],
-            ]));
             return $arr['geoplugin_city'];
         } else
             return file_get_contents($url);
